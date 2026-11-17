@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> 
+    <link rel="stylesheet" href="/css/estiloCliente.css">i   
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Clientes</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="/">Home</a>
+        <a class="nav-link" href="/cliente/alta">Altas</a>
+        <a class="nav-link" href="/cliente/mostrartodos">Mostrar Todos</a>
+        <a class="nav-link" href="/cliente/baja">Bajas</a>
+        <a class="nav-link" href="/cliente/modifica">Modificar</a>        
+        <a class="nav-link" href="/cliente/consultaxid">Consulta por</a>        
+      </div>
+    </div>
+  </div>
+</nav>
+
+       <div class="container">
+        <h1>Mostrar Datos del Cliente</h1>
+    </div>
+    
+<!-- <form action="/cliente/eliminar" method="post"> -->
+<form onsubmit="tomaElValorPorParametro(event)"> 
+    <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">Id</span>
+    <input type="text" class="form-control" disabled id="id" name="id" value=<%= respcodigo %> aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+
+    <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon2">Nombre</span>
+    <input type="text" class="form-control" disabled name="nom" value=<%= respnom %> aria-label="Recipient's username" aria-describedby="basic-addon2">
+    </div>
+
+    <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon3">Ciudad:</span>
+    <input type="text" class="form-control" disabled name="ciu" value=<%= respciu %> aria-describedby="basic-addon3">
+    </div>
+
+    <div class="input-group mb-3">
+    <span class="input-group-text">Calificación</span>
+    <input type="text" class="form-control" disabled name="calif" value=<%= respcalif %> aria-label="Amount (to the nearest dollar)">
+    </div>
+
+    <div class="input-group mb-3">
+    <span class="input-group-text">Vendedor</span>
+    <input type="text" class="form-control" disabled name="idvend" value=<%= respidvend %> aria-label="Server">
+    </div>
+<button type="submit" class="btn btn-primary">ELIMINAR</button>
+<button type="reset" class="btn btn-danger">CANCELAR</button>
+</form>    
+
+<script>
+  function tomaElValorPorParametro(event) {
+    event.preventDefault();
+    let id = document.getElementById('id').value;
+    window.location.href = `/cliente/eliminar/${id}`
+    document.getElementById('id').value = '';
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">     
+    <link rel="stylesheet" href="/css/estiloCliente.css">i   
+    <title>Document</title>
+</head>
+<body>
+ 
+
+   <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/cliente">Clientes</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="/">Home</a>
+        <a class="nav-link" href="/cliente/alta">Altas</a>
+      </div>
+    </div>
+  </div>
+</nav>
+     
+<form action="/cliente/alta" method="post">
+    <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">Id</span>
+    <input type="text" class="form-control" inputmode="numeric" id="idhtml" name="id" placeholder="Id del Cliente" aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+
+    <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon2">Nombre</span>
+    <input type="text" class="form-control" id="nomhtml"  name="nom" placeholder="Razón Social" aria-label="Recipient's username" aria-describedby="basic-addon2">
+    </div>
+
+    <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon3">Ciudad:</span>
+    <input type="text" class="form-control" name="ciu" id="basic-url" aria-describedby="basic-addon3">
+    </div>
+
+    <div class="input-group mb-3">
+    <span class="input-group-text">Calificación</span>
+    <input type="text" class="form-control" data-only-numbers name="calif" aria-label="Amount (to the nearest dollar)">
+    </div>
+
+    <div class="input-group mb-3">
+    <span class="input-group-text">Vendedor</span>
+    <input type="text" class="form-control" data-only-numbers name="idvend" placeholder="Id del Vendedor" aria-label="Server">
+    </div>
+<button type="submit" class="btn btn-primary">Agregar</button>
+
+</form>    
+
+<script>
+  const numeroid = document.getElementById('idhtml');
+  numeroid.addEventListener('keydown', (e)=>{
+
+    // Permitir teclas de control (Navegación y edición)
+    const teclasPermitidas = ['ArrowLeft', 'ArrowRigth', 'Tab', 'Backspace', 'Delete', 'Enter'];
+    
+    // Si es una tecla permitida de navegación/edición, dejamos continuar
+    if (teclasPermitidas.includes(e.key)) {
+      return;
+    }
+
+    if (e.metaKey || e.ctrlKey) {
+      return;
+    }
+
+    // Validar si el carácter presionado no es un dígito (0-9)
+    if (!/^[0-9]$/.test(e.key)) {
+      Swal.fire({
+        icon: "error",
+        title: "Error !!",
+        text: "Debe ingresar solo números",
+      });
+      e.preventDefault(); // Bloquea la entrada de la tecla
+    }
+  })
+
+  // Limpia cualquier carácter no numérico si el usuario pega contenido
+  numeroid.addEventListener('input', (e)=>{
+    this.value = this.value.replace(/[^0-9]/g, '');
+    
+  })
+
+
+
+  const letra = document.getElementById('nomhtml');
+  letra.addEventListener('beforeinput', (e)=>{
+    // Si el evento inserta texto (como escribir o pegar)
+    if (e.data) {
+      // Expresión regular que permite letras (mayúsculas/minúsculas), acentos y espacios
+      const caracterIngresado = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]$/;
+
+      // Si la tecla presionado NO es una letra, cancelamos la entrada
+      if (!caracterIngresado.test(e.data)) {
+        Swal.fire({
+          icon: "error",
+          title: "Error !!",
+          text: "Debe ingresar solo letras",
+        });        
+        e.preventDefault();
+      }
+    }
+  })
+
+  letra.addEventListener('paste', (e)=>{
+    // 1. Obtener el texto que el usuario intenta pegar desde el portapapeles
+    const textoPegado = (e.clipboardData || window.clipboardData).getData('text');
+
+    // 2. Expresión regular que valida que TODO el texto sean letras, acentos o espacios
+    const letras = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+
+    // 3. Evaluar el texto completo
+    if (!letras.test(textoPegado)) {
+      Swal.fire({
+        icon: "error",
+        title: "Error !!",
+        text: "El texto pegado solo debe tener letras y/o espacios",
+      });      
+      e.preventDefault(); // Cancela la acción de pegar si contiene números o símbolos
+    }
+  })
+
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<%  if ( guardado == true) { %>
+  <script>
+        Swal.fire({
+          position: '<%= posicion %>',
+          icon: '<%= icono %>',
+          title: '<%= mensaje %>',
+          showConfirmButton: '<%= botonConfirma %>',
+          timer: '<%= tiempo %>',
+          theme: 'dark'
+        });    
+  </script>
+<% } else { if (guardado == 'error') {%>
+  <script>
+    Swal.fire({
+      icon: "error",
+      title: "Error al intentar guardar un Cliente ...",
+      text: '<%= mensaje %>',
+    });
+  </script>
+  <% } } %>
+
+
+<script>
+console.log('entrando');
+document.addEventListener('DOMContentLoaded', ()=>{
+    soloNumero();
+});
+
+/**
+  * Configura la restricción numérica en campos con [data-only-numbers]
+*/
+function soloNumero() {
+    const numeroIngresado = document.querySelector('[data-only-numbers]');
+    numeroIngresado.forEach(nro => {
+        // 1. Previene el ingreso de caracteres no numéricos al presionar teclas o pegar
+        nro.addEventListener('beforeinput', (e)=>{
+            // Si hay texto siendo insertado (tecleado o pegado)
+            if (e.data !== null) {
+                // Rechaza si no es completamente dígitos (0-9)
+                if (!/^\d+$/.test(e.data)) {
+                    Swal.fire({
+                            icon: "error",
+                            title: "Error !!",
+                            text: "Debe ingresar solo números",
+                        });
+                    e.preventDefault();    
+                }
+            }
+        })
+
+        // 2. Limpieza de respaldo (por si arrastran texto con el mouse)
+        nro.addEventListener('input', (e)=>{
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+    });
+    
+}
+
+
+</script>
+  <script  src="../js/validarNumero.js" ></script>
+</body>
+</html>

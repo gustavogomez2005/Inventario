@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/estiloPedidos.css">            
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Pedidos</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="/">Home</a>
+        <a class="nav-link" href="/pedido/alta">Altas</a>
+        <a class="nav-link" href="/pedido/mostrartodo">Mostrar Todos</a>
+        <a class="nav-link" href="/pedido/baja">Bajas</a>
+        <a class="nav-link" href="/pedido/modifica">Modificar</a>        
+        <a class="nav-link" href="/pedido/consultaid">Consulta por</a>        
+      </div>
+    </div>
+  </div>
+</nav>
+
+    <div class="container">
+        <h1>mostrar datos de todos los Pedidos</h1>
+    </div>
+    
+    <div class="container-fluid">
+        <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Código del Cliente</th>
+            <th scope="col">Código del Vendedor</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <% if (registros.length > 0) {
+                registros.forEach(ped => { %>
+                    <tr>
+                        <td><%= ped.idPedidos %></td>
+                        <td><%= ped.precioCompra %></td>
+                        <td><%= ped.fechaPedido %></td>
+                        <td><%= ped.Cliente_idCliente %></td>
+                        <td><%= ped.Vendedor_idVendedor %></td>                                                
+                    </tr>                    
+                <% }); %>
+            <% }
+            else{ %>
+                <p>No hay datos para mostrar </p>
+            <% } %>
+
+            
+        </tbody>
+        </table>
+
+    </div>
+
+
+
+</body>
+</html>
